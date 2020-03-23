@@ -1,4 +1,4 @@
-package com.dstech.todolist;
+package com.dstech.todolist.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

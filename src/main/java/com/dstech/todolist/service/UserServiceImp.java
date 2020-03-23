@@ -10,12 +10,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.dstech.todolist.dao.UserRegistrationDao;
 import com.dstech.todolist.model.Role;
 import com.dstech.todolist.model.User;
 import com.dstech.todolist.repository.UserRepository;
 
+@Service
 public class UserServiceImp implements UserService {
 	
 	@Autowired
@@ -49,7 +51,7 @@ public class UserServiceImp implements UserService {
 	    user.setEmail(registration.getEmail()); 
 	    user.setPassword(passwordEncoder.encode(registration.getPassword()));
 	    user.setImage(registration.getImage());
-	    user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+	    user.setRoles(Arrays.asList(new Role("USER")));
 	    return userRepository.save(user);
 	}
 
