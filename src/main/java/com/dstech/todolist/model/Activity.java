@@ -1,12 +1,14 @@
 package com.dstech.todolist.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Activity {
@@ -22,7 +24,8 @@ public class Activity {
 	
 	private String description;
 	
-	private LocalDate expiredDate;
+	@DateTimeFormat(pattern = "dd/mm/yyyy")
+	private Date expiredDate;
 	
 	private boolean isCarryOut;
 
@@ -58,11 +61,11 @@ public class Activity {
 		this.description = description;
 	}
 
-	public LocalDate getExpiredDate() {
+	public Date getExpiredDate() {
 		return expiredDate;
 	}
 
-	public void setExpiredDate(LocalDate expiredDate) {
+	public void setExpiredDate(Date expiredDate) {
 		this.expiredDate = expiredDate;
 	}
 
