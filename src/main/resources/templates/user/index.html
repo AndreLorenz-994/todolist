@@ -18,20 +18,25 @@
 		<h2>Home page</h2>
 		<h1 th:text="'Welcome, ' + ${authUser} + '!'">Welcome!</h1>
 		<!-- ASK FOR QUESTION -->
-		<img class="rounded-circle"
-			th:src="${authUserImage} == null ? _ : @{'data:image/png;base64,'+${authUserImage}}">
+		<img class="rounded-circle" th:src="${authUserImage} == null ? _ : @{'data:image/png;base64,'+${authUserImage}}">
 
 		<h2>Activity Form</h2>
 
-		<form action="#" th:action="@{/user/home}" th:object="${activity}"
+		<form action="#" th:action="@{/save}" th:object="${activity}"
 			method="post">
+			<p th:if="${successmessage}">
+              <a href="#">&times;</a>
+              <strong th:text="${successmessage}"></strong>
+          </p>			
 			<input type="text" placeholder="Name activity"
 				th:field="*{activityTitle}"> <input
 				placeholder="Type of activity" th:field="*{type}" type="text">
 			<input placeholder="Description" th:field="*{description}"
-				type="text"> <input placeholder="Expired date"
+				type="text"> 
+			<input placeholder="Expired date"
 				th:field="*{expiredDate}" type="text"> <input type="hidden"
-				th:field="*{id}"> <input type="submit" value="Submit">
+				th:field="*{id}"> 
+			<input type="submit" value="Submit">
 		</form>
 
 		<h2>All Activities</h2>

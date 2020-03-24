@@ -24,7 +24,7 @@ public class Activity {
 	
 	private String description;
 	
-	@DateTimeFormat(pattern = "dd/mm/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expiredDate;
 	
 	private boolean isCarryOut;

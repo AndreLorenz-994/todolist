@@ -47,12 +47,12 @@ public class WebController {
         return "user/index";
     }
     
-    @PostMapping(value="/user/home")
+    @PostMapping(value="/save")
     public String save (@ModelAttribute Activity activity, RedirectAttributes redirectAttributes, Model model) {
         Activity dbActivity = activityService.save(activity);
         if(dbActivity != null) {
             redirectAttributes.addFlashAttribute("successmessage", "Activity is saved successfully");
-            return "user/index";
+            return "redirect:/user/home";
         }else {
             model.addAttribute("errormessage", "Activity is not save, Please try again");
             model.addAttribute("activity", activity);
