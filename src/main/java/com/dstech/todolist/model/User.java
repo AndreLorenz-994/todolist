@@ -31,29 +31,10 @@ public class User {
 	// Upload files. 
 	@Lob
 	private byte[] image;
-	private String typeImage;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
-
-    public User() {}
-
-    public User(String email, String password, byte[] image, String typeImage) {
-        this.email = email;
-        this.password = password;
-        this.image= image;
-        this.typeImage=typeImage;
-    }
-
-    public User(String email, String password, byte[] image , String typeImage, Collection<Role> roles) {
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.image= image;
-        this.typeImage=typeImage;
-        
-    }
 
     public Long getId() {
         return id;
@@ -85,14 +66,6 @@ public class User {
 	
 	public void setImage(byte[] image) {
 		this.image= image;
-	}
-	
-	public String getTypeImage() {
-		return typeImage;
-	}
-
-	public void setTypeImage(String typeImage) {
-		this.typeImage = typeImage;
 	}
 
     public Collection<Role> getRoles() {

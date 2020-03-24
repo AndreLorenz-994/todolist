@@ -14,9 +14,10 @@
 <body>
     <div class="container">
         <h2>Home page </h2>
-       	<h1>Welcome!</h1>
-       	<p>Click <a th:href="@{/registration}">here</a> to register.</p>
-       	<p>If you already registered, Click <a th:href="@{/user}">here</a> to see the activities of your user.</p>        
+       	<h1 th:text="'Welcome, ' + ${authUser} + '!'">Welcome! </h1>
+       	<!-- ASK FOR QUESTION -->
+       	<img class="rounded-circle" th:src="${authUserImage} == null ? _ : @{'data:image/png;base64,'+${authUserImage}}">
+   
     </div>
 
     <script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>

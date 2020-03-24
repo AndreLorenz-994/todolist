@@ -15,10 +15,7 @@ public class UserRegistrationDao {
     private String email;
     
     @Transient
-    private byte[] image;
-    
-    @NotEmpty
-    private String typeImage;    
+    private byte[] image;    
 
     public String getPassword() {
         return password;
@@ -41,15 +38,7 @@ public class UserRegistrationDao {
 	}
 	
 	public void setImage(byte[] image) {
-		this.image= image;
+		this.image = image;
 	}
-	
-	public String getTypeImage() {
-		return typeImage;
-	}
-
-	public void setTypeImage(String typeImage) {
-		this.typeImage = typeImage;
-	}	
 	
 }
