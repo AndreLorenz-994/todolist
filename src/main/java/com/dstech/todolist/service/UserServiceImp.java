@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dstech.todolist.dao.UserRegistrationDao;
+import com.dstech.todolist.model.Activity;
 import com.dstech.todolist.model.Role;
 import com.dstech.todolist.model.User;
 import com.dstech.todolist.repository.UserRepository;
@@ -52,6 +53,7 @@ public class UserServiceImp implements UserService {
 	    user.setPassword(passwordEncoder.encode(registration.getPassword()));
 	    user.setImage(registration.getImage());
 	    user.setRoles(Arrays.asList(new Role("USER")));
+	    user.setActivities(Arrays.asList(new Activity()));
 	    return userRepository.save(user);
 	}
 
