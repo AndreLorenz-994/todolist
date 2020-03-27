@@ -37,8 +37,8 @@ public class WebController {
     @GetMapping("/user/home")
     public String userIndex(Model model) {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<Activity>activities = activityService.getAllActivities();
 	    User user = userService.findByEmail(auth.getName());   	
+	    List<Activity>activities = activityService.getAllActivities();
 	    model.addAttribute("authUser", user.getEmail());
 	    model.addAttribute("authUserImage", Base64.getEncoder().encodeToString(user.getImage()));
         model.addAttribute("activities", activities);
@@ -49,7 +49,11 @@ public class WebController {
     
     @PostMapping(value="/save")
     public String save (@ModelAttribute Activity activity, RedirectAttributes redirectAttributes, Model model) {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    User user = userService.findByEmail(auth.getName());   	   	
         Activity dbActivity = activityService.save(activity);
+	    List<Activity>activities = activityService.getAllActivities(); 
+        userService.addAcitivies(user, activities);
         if(dbActivity != null) {
             redirectAttributes.addFlashAttribute("successmessage", "Activity is saved successfully");
             return "redirect:/user/home";

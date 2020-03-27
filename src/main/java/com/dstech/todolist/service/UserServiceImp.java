@@ -2,6 +2,7 @@ package com.dstech.todolist.service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,6 @@ public class UserServiceImp implements UserService {
 	    user.setPassword(passwordEncoder.encode(registration.getPassword()));
 	    user.setImage(registration.getImage());
 	    user.setRoles(Arrays.asList(new Role("USER")));
-	    user.setActivities(Arrays.asList(new Activity()));
 	    return userRepository.save(user);
 	}
 
@@ -73,6 +73,13 @@ public class UserServiceImp implements UserService {
 	    return roles.stream()
 	        .map(role -> new SimpleGrantedAuthority(role.getName()))
 	        .collect(Collectors.toList());
+	}
+
+	@Override
+	public void addAcitivies(User user, List<Activity> activities) {
+		// TODO Auto-generated method stub
+		user.setActivities(activities);
+		userRepository.save(user);
 	}
 	
 }
