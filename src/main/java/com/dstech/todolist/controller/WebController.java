@@ -1,10 +1,15 @@
 package com.dstech.todolist.controller;
 
-import java.util.ArrayList;
+
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +27,7 @@ import com.dstech.todolist.service.UserService;
 
 
 
+@EnableScheduling
 @Controller
 public class WebController {
 	
@@ -30,6 +36,9 @@ public class WebController {
 	
 	@Autowired
 	private ActivityService activityService;
+	
+	@Autowired
+	private TaskScheduler scheduler;
 
 	@RequestMapping(value = {"/login", "/"}, method=RequestMethod.GET)
     public String login(Model model) {
@@ -56,6 +65,16 @@ public class WebController {
 	    List<Activity> activities = user.getActivities();
         Activity currActivity = activityService.save(activity);
         activities.add(currActivity);
+        for(Activity act:activities) {
+        	LocalDateTime dateTime = act.getExpiredDate();
+    		int minute = dateTime.getMinute();
+    		int hours = dateTime.getHour();
+    		int day = dateTime.getDayOfMonth();
+    		int month = dateTime.getMonth().getValue();
+    		String expression = " 0 " + (minute - 2) + " " + hours + " " + day + " " + month + " ?";
+    		CronTrigger trigger = new CronTrigger(expression, TimeZone.getTimeZone(TimeZone.getDefault().getID()));
+    		scheduler.schedule(activity, trigger);
+        }
         userService.addActivities(user, activities);
         if(currActivity != null) {
             redirectAttributes.addFlashAttribute("successmessage", "Activity is saved successfully");

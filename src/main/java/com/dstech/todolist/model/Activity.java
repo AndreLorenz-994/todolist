@@ -1,6 +1,6 @@
 package com.dstech.todolist.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-public class Activity {
+public class Activity implements Runnable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,8 +24,10 @@ public class Activity {
 	
 	private String description;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate expiredDate;
+	private String message;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime expiredDate;
 	
 	private boolean isCarryOut;
 
@@ -61,11 +63,11 @@ public class Activity {
 		this.description = description;
 	}
 
-	public LocalDate getExpiredDate() {
+	public LocalDateTime getExpiredDate() {
 		return expiredDate;
 	}
 
-	public void setExpiredDate(LocalDate expiredDate) {
+	public void setExpiredDate(LocalDateTime expiredDate) {
 		this.expiredDate = expiredDate;
 	}
 
@@ -75,6 +77,20 @@ public class Activity {
 
 	public void setCarryOut(boolean isCarryOut) {
 		this.isCarryOut = isCarryOut;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		System.out.println(message);
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	

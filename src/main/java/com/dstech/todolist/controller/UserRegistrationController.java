@@ -53,7 +53,7 @@ public class UserRegistrationController {
 
         userService.save(userDto);
         mailService.sendMail(userDto.getEmail(), "Confirm registration", "User has been registered successfully");
-		return "index";
+		return "confirmation";
     }
     
 }
