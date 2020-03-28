@@ -16,12 +16,6 @@ public class ActivityServiceImp implements ActivityService {
 	private ActivityRepository activityRepository;
 
 	@Override
-	public List<Activity> getAllActivities() {
-		// TODO Auto-generated method stub
-		return (List<Activity>) activityRepository.findAll();
-	}
-
-	@Override
 	public Activity save(Activity activity) {
 		// TODO Auto-generated method stub
 		return  activityRepository.save(activity);
@@ -42,6 +36,12 @@ public class ActivityServiceImp implements ActivityService {
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		activityRepository.deleteById(id);
+	}
+
+	@Override
+	public List<Activity> getAllActivities() {
+		// TODO Auto-generated method stub
+		return (List<Activity>) activityRepository.findAll();
 	}
 
 }

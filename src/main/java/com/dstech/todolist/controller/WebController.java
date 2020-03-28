@@ -1,5 +1,6 @@
 package com.dstech.todolist.controller;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -8,9 +9,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dstech.todolist.model.Activity;
@@ -29,16 +31,16 @@ public class WebController {
 	@Autowired
 	private ActivityService activityService;
 
-    @GetMapping("/login")
+	@RequestMapping(value = {"/login", "/"}, method=RequestMethod.GET)
     public String login(Model model) {
         return "login";
     }
 
-    @GetMapping("/user/home")
+	@RequestMapping(value = {"/user/home"}, method=RequestMethod.GET)
     public String userIndex(Model model) {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    User user = userService.findByEmail(auth.getName());   	
-	    List<Activity>activities = activityService.getAllActivities();
+	    List<Activity> activities = user.getActivities();
 	    model.addAttribute("authUser", user.getEmail());
 	    model.addAttribute("authUserImage", Base64.getEncoder().encodeToString(user.getImage()));
         model.addAttribute("activities", activities);
@@ -50,11 +52,12 @@ public class WebController {
     @PostMapping(value="/save")
     public String save (@ModelAttribute Activity activity, RedirectAttributes redirectAttributes, Model model) {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    User user = userService.findByEmail(auth.getName());   	   	
-        Activity dbActivity = activityService.save(activity);
-	    List<Activity>activities = activityService.getAllActivities(); 
-        userService.addAcitivies(user, activities);
-        if(dbActivity != null) {
+	    User user = userService.findByEmail(auth.getName());   	
+	    List<Activity> activities = user.getActivities();
+        Activity currActivity = activityService.save(activity);
+        activities.add(currActivity);
+        userService.addActivities(user, activities);
+        if(currActivity != null) {
             redirectAttributes.addFlashAttribute("successmessage", "Activity is saved successfully");
             return "redirect:/user/home";
         }else {

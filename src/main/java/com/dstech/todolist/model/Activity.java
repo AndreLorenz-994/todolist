@@ -1,6 +1,6 @@
 package com.dstech.todolist.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ public class Activity {
 	private String description;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date expiredDate;
+	private LocalDate expiredDate;
 	
 	private boolean isCarryOut;
 
@@ -61,11 +61,11 @@ public class Activity {
 		this.description = description;
 	}
 
-	public Date getExpiredDate() {
+	public LocalDate getExpiredDate() {
 		return expiredDate;
 	}
 
-	public void setExpiredDate(Date expiredDate) {
+	public void setExpiredDate(LocalDate expiredDate) {
 		this.expiredDate = expiredDate;
 	}
 

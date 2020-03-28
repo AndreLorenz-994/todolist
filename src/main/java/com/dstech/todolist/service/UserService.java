@@ -18,6 +18,6 @@ public interface UserService extends UserDetailsService {
     
     void deleteById(Long userId);
     
-    void addAcitivies(User user, List<Activity> activities);
+    void addActivities(User user, List<Activity> activities);
 	
 }

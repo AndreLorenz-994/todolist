@@ -76,7 +76,7 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public void addAcitivies(User user, List<Activity> activities) {
+	public void addActivities(User user, List<Activity> activities) {
 		// TODO Auto-generated method stub
 		user.setActivities(activities);
 		userRepository.save(user);
