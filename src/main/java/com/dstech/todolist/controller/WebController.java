@@ -6,6 +6,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -46,10 +48,20 @@ public class WebController {
     }
 
 	@RequestMapping(value = {"/user/home"}, method=RequestMethod.GET)
-    public String userIndex(Model model) {
+    public String userIndex(Model model, Activity activity) throws MessagingException {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    User user = userService.findByEmail(auth.getName());   	
+	    User user = userService.findByEmail(auth.getName());   	    
 	    List<Activity> activities = user.getActivities();
+        for(Activity act:activities) {
+        	LocalDateTime dateTime = act.getExpiredDate();
+    		int minute = dateTime.getMinute();
+    		int hours = dateTime.getHour();
+    		int day = dateTime.getDayOfMonth();
+    		int month = dateTime.getMonth().getValue();
+    		String expression = " 0 " + (minute - 2) + " " + hours + " " + day + " " + month + " ?";
+    		CronTrigger trigger = new CronTrigger(expression, TimeZone.getTimeZone(TimeZone.getDefault().getID()));
+    		scheduler.schedule(activity, trigger);
+        }	    
 	    model.addAttribute("authUser", user.getEmail());
 	    model.addAttribute("authUserImage", Base64.getEncoder().encodeToString(user.getImage()));
         model.addAttribute("activities", activities);
@@ -65,16 +77,6 @@ public class WebController {
 	    List<Activity> activities = user.getActivities();
         Activity currActivity = activityService.save(activity);
         activities.add(currActivity);
-        for(Activity act:activities) {
-        	LocalDateTime dateTime = act.getExpiredDate();
-    		int minute = dateTime.getMinute();
-    		int hours = dateTime.getHour();
-    		int day = dateTime.getDayOfMonth();
-    		int month = dateTime.getMonth().getValue();
-    		String expression = " 0 " + (minute - 2) + " " + hours + " " + day + " " + month + " ?";
-    		CronTrigger trigger = new CronTrigger(expression, TimeZone.getTimeZone(TimeZone.getDefault().getID()));
-    		scheduler.schedule(activity, trigger);
-        }
         userService.addActivities(user, activities);
         if(currActivity != null) {
             redirectAttributes.addFlashAttribute("successmessage", "Activity is saved successfully");

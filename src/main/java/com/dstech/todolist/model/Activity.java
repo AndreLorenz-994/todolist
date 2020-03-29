@@ -24,8 +24,6 @@ public class Activity implements Runnable {
 	
 	private String description;
 	
-	private String message;
-	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime expiredDate;
 	
@@ -81,18 +79,6 @@ public class Activity implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		System.out.println(message);
+		System.out.println("prova");
 	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
-	
-	
 }
