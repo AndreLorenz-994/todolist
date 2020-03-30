@@ -12,14 +12,14 @@
 			type="Submit">Go To Login Page</button></a>
 
 
-	<form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post" class="form-horizontal">
+	<form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post" class="form-horizontal" enctype="multipart/form-data">
 		<h2>Registration Form</h2>
 
 		<input type="text" th:field="*{email}" placeholder="Email" class="form-control" /> 
 		<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label> 
 		<input type="password" th:field="*{password}" placeholder="Password" class="form-control" /> 
 		<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label> 
-		<input id="image" class="form-control" type="file" th:field="*{image}" /> 
+		<input id="image" class="form-control" type="file" name="image" th:field="*{image}" /> 
 		<label th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="validation-message"> Profile picture</label>
 
 		<input type="submit" value="Register User" />

@@ -12,21 +12,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Activity implements Runnable {
-
+ 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "activity_id")	
+	@Column(name = "activity_id")
 	private Long id;
-	
+
 	private String activityTitle;
-	
+
 	private String type;
-	
+
 	private String description;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime expiredDate;
-	
+
 	private boolean isCarryOut;
 
 	public Long getId() {

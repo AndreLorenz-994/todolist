@@ -5,6 +5,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class UserRegistrationDao {
 
     @NotEmpty
@@ -15,7 +17,7 @@ public class UserRegistrationDao {
     private String email;
     
     @Transient
-    private byte[] image;    
+    private MultipartFile image;    
 
     public String getPassword() {
         return password;
@@ -33,11 +35,11 @@ public class UserRegistrationDao {
         this.email = email;
     }
     
-	public byte[] getImage() {
+	public MultipartFile getImage() {
 		return image;
 	}
 	
-	public void setImage(byte[] image) {
+	public void setImage(MultipartFile image) {
 		this.image = image;
 	}
 	
