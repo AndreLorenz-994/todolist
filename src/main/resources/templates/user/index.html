@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<link rel="stylesheet" type="text/css"
-	th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}" />
-
-<title>Homepage</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="../../../css/screen.css" th:href="@{/css/screen.css}" />	
+	<title>Homepage</title>
 </head>
 
 <body>
@@ -21,25 +17,17 @@
 
 		<h2>Activity Form</h2>
 
-		<form action="#" th:action="@{/save}" th:object="${activity}"
-			method="post">
-			<p th:if="${successmessage}">
-              <a href="#">&times;</a>
-              <strong th:text="${successmessage}"></strong>
-          </p>			
-			<input type="text" placeholder="Name activity"
-				th:field="*{activityTitle}"> <input
-				placeholder="Type of activity" th:field="*{type}" type="text">
-			<input placeholder="Description" th:field="*{description}"
-				type="text"> 
-			<input placeholder="Expired date"
-				th:field="*{expiredDate}" type="text"> <input type="hidden"
-				th:field="*{id}"> 
+		<form action="#" th:action="@{/save}" th:object="${activity}" method="post">
+			<p th:if="${successmessage}"><a href="#">&times;</a><strong class="text-success" th:text="${successmessage}"></strong></p>			
+			<input type="text" placeholder="Name activity" th:field="*{activityTitle}"> 
+			<input placeholder="Type of activity" th:field="*{type}" type="text">
+			<input placeholder="Description" th:field="*{description}" type="text"> 
+			<input placeholder="Expired date" th:field="*{expiredDate}" type="text"> <input type="hidden" th:field="*{id}"> 
 			<input type="submit" value="Submit">
 		</form>
 
 		<h2>All Activities</h2>
-			<table style="width: 100%">
+			<table class="activities">
 				<thead>
 					<tr>
 						<th>Activity Title</th>

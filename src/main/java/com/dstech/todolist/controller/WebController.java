@@ -77,11 +77,11 @@ public class WebController {
 			int hours = date.getHour();
 			int day = date.getDayOfMonth();
 			int month = date.getMonth().getValue();
-			String expression = " 0 " + (minute - 2) + " " + hours + " " + day + " " + month + " ?";
+			String expression = " 0 " + (minute - 30) + " " + hours + " " + day + " " + month + " ?";
 			CronTrigger trigger = new CronTrigger(expression, TimeZone.getTimeZone(TimeZone.getDefault().getID()));
 			MyRunnable myRunnable = new MyRunnable(currActivity, mailService);
-            redirectAttributes.addFlashAttribute("successmessage", "Activity is saved successfully");
             scheduler.schedule(myRunnable, trigger);
+            redirectAttributes.addFlashAttribute("successmessage", "Activity is saved successfully");
             return "redirect:/user/home";
         }else {
             model.addAttribute("errormessage", "Activity is not save, Please try again");

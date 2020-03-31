@@ -40,7 +40,7 @@ public class UserRegistrationController {
     }
 
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDao userDto, BindingResult result) throws MessagingException, IOException {
+    public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDao userDto, BindingResult result, Model model) throws MessagingException, IOException {
         User existing = userService.findByEmail(userDto.getEmail());
         if (existing != null) {
             result.rejectValue("email", null, "There is already an account registered with that email");
@@ -52,7 +52,8 @@ public class UserRegistrationController {
 
         userService.save(userDto);
         mailService.sendMail(userDto.getEmail(), "Confirm registration", "User has been registered successfully");
-		return "confirmation";
+        model.addAttribute("successMessage", "User has been registered successfully, go back to login page");
+		return "registration";
     }
     
 }
