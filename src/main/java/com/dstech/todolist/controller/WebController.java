@@ -25,6 +25,7 @@ import com.dstech.todolist.model.Activity;
 import com.dstech.todolist.model.MyRunnable;
 import com.dstech.todolist.model.User;
 import com.dstech.todolist.service.ActivityService;
+import com.dstech.todolist.service.MailService;
 import com.dstech.todolist.service.UserService;
 
 @EnableScheduling
@@ -38,7 +39,10 @@ public class WebController {
 	private ActivityService activityService;
 
 	@Autowired
-	private TaskScheduler scheduler;	
+	private TaskScheduler scheduler;
+	
+	@Autowired
+	private MailService mailService;
 
 	@RequestMapping(value = { "/login", "/" }, method = RequestMethod.GET)
 	public String login(Model model) {
@@ -75,9 +79,9 @@ public class WebController {
 			int month = date.getMonth().getValue();
 			String expression = " 0 " + (minute - 2) + " " + hours + " " + day + " " + month + " ?";
 			CronTrigger trigger = new CronTrigger(expression, TimeZone.getTimeZone(TimeZone.getDefault().getID()));
-			MyRunnable obj = new MyRunnable(currActivity);
+			MyRunnable myRunnable = new MyRunnable(currActivity, mailService);
             redirectAttributes.addFlashAttribute("successmessage", "Activity is saved successfully");
-            scheduler.schedule(obj, trigger);
+            scheduler.schedule(myRunnable, trigger);
             return "redirect:/user/home";
         }else {
             model.addAttribute("errormessage", "Activity is not save, Please try again");
