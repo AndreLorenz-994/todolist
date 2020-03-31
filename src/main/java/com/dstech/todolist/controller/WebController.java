@@ -1,6 +1,5 @@
 package com.dstech.todolist.controller;
 
-
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dstech.todolist.model.Activity;
+import com.dstech.todolist.model.MyRunnable;
 import com.dstech.todolist.model.User;
 import com.dstech.todolist.service.ActivityService;
 import com.dstech.todolist.service.UserService;
@@ -40,7 +40,7 @@ public class WebController {
 	private ActivityService activityService;
 	
 	@Autowired
-	private TaskScheduler scheduler;
+	private TaskScheduler scheduler;	
 
 	@RequestMapping(value = {"/login", "/"}, method=RequestMethod.GET)
     public String login(Model model) {
@@ -51,17 +51,7 @@ public class WebController {
     public String userIndex(Model model, Activity activity) throws MessagingException {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    User user = userService.findByEmail(auth.getName());   	    
-	    List<Activity> activities = user.getActivities();
-        for(Activity act:activities) {
-        	LocalDateTime dateTime = act.getExpiredDate();
-    		int minute = dateTime.getMinute();
-    		int hours = dateTime.getHour();
-    		int day = dateTime.getDayOfMonth();
-    		int month = dateTime.getMonth().getValue();
-    		String expression = " 0 " + (minute - 2) + " " + hours + " " + day + " " + month + " ?";
-    		CronTrigger trigger = new CronTrigger(expression, TimeZone.getTimeZone(TimeZone.getDefault().getID()));
-    		scheduler.schedule(activity, trigger);
-        }	    
+	    List<Activity> activities = user.getActivities();	    
 	    model.addAttribute("authUser", user.getEmail());
 	    model.addAttribute("authUserImage", Base64.getEncoder().encodeToString(user.getImage()));
         model.addAttribute("activities", activities);
@@ -74,12 +64,22 @@ public class WebController {
     public String save (@ModelAttribute Activity activity, RedirectAttributes redirectAttributes, Model model) {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    User user = userService.findByEmail(auth.getName());   	
-	    List<Activity> activities = user.getActivities();
+	    activity.setUser(user);
         Activity currActivity = activityService.save(activity);
+        List<Activity> activities = user.getActivities();
         activities.add(currActivity);
         userService.addActivities(user, activities);
         if(currActivity != null) {
+            LocalDateTime date = currActivity.getExpiredDate();
+			int minute = date.getMinute();
+			int hours = date.getHour();
+			int day = date.getDayOfMonth();
+			int month = date.getMonth().getValue();
+			String expression = " 0 " + (minute - 2) + " " + hours + " " + day + " " + month + " ?";
+			CronTrigger trigger = new CronTrigger(expression, TimeZone.getTimeZone(TimeZone.getDefault().getID()));
+			MyRunnable obj = new MyRunnable(currActivity);
             redirectAttributes.addFlashAttribute("successmessage", "Activity is saved successfully");
+            scheduler.schedule(obj, trigger);
             return "redirect:/user/home";
         }else {
             model.addAttribute("errormessage", "Activity is not save, Please try again");

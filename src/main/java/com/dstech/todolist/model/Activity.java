@@ -2,16 +2,19 @@ package com.dstech.todolist.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-public class Activity implements Runnable {
+public class Activity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +31,9 @@ public class Activity implements Runnable {
 	private LocalDateTime expiredDate;
 	
 	private boolean isCarryOut;
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private User user;
 
 	public Long getId() {
 		return id;
@@ -77,8 +83,12 @@ public class Activity implements Runnable {
 		this.isCarryOut = isCarryOut;
 	}
 
-	@Override
-	public void run() {
-		System.out.println("prova");
+	public User getUser() {
+		return user;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }
