@@ -22,23 +22,22 @@ import com.dstech.todolist.repository.UserRepository;
 
 @Service
 public class UserServiceImp implements UserService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;	
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-	    User user = userRepository.findByEmail(email);
-	    if (user == null) {
-	        throw new UsernameNotFoundException("Invalid username or password.");
-	    }
-	    return new org.springframework.security.core.userdetails.User(user.getEmail(),
-	        user.getPassword(),
-	        mapRolesToAuthorities(user.getRoles()));
+		User user = userRepository.findByEmail(email);
+		if (user == null) {
+			throw new UsernameNotFoundException("Invalid username or password.");
+		}
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+				mapRolesToAuthorities(user.getRoles()));
 	}
 
 	@Override
@@ -75,10 +74,8 @@ public class UserServiceImp implements UserService {
 		userRepository.deleteById(userId);
 	}
 
-	private Collection < ? extends GrantedAuthority > mapRolesToAuthorities(Collection<Role> roles) {
-	    return roles.stream()
-	        .map(role -> new SimpleGrantedAuthority(role.getName()))
-	        .collect(Collectors.toList());
+	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
 
 	@Override
@@ -87,5 +84,5 @@ public class UserServiceImp implements UserService {
 		user.setActivities(activities);
 		userRepository.save(user);
 	}
-	
+
 }

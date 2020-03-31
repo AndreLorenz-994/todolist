@@ -40,8 +40,8 @@ public class UserRegistrationController {
     }
 
     @PostMapping
-    public String registerUserAccount( @ModelAttribute("user") @Valid UserRegistrationDao userDto, BindingResult result) throws MessagingException, IOException {
-        User existing = userService.findByEmail(userDto.getEmail()); 
+    public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDao userDto, BindingResult result) throws MessagingException, IOException {
+        User existing = userService.findByEmail(userDto.getEmail());
         if (existing != null) {
             result.rejectValue("email", null, "There is already an account registered with that email");
         }

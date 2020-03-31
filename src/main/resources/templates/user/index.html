@@ -17,7 +17,6 @@
 	<div class="container">
 		<h2>Home page</h2>
 		<h1 th:text="'Welcome, ' + ${authUser} + '!'">Welcome!</h1>
-		<!-- ASK FOR QUESTION -->
 		<img class="rounded-circle" th:src="${authUserImage} == null ? _ : @{'data:image/png;base64,'+${authUserImage}}" style="width:100px;">
 
 		<h2>Activity Form</h2>

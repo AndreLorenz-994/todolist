@@ -27,25 +27,23 @@ import com.dstech.todolist.model.User;
 import com.dstech.todolist.service.ActivityService;
 import com.dstech.todolist.service.UserService;
 
-
-
 @EnableScheduling
 @Controller
 public class WebController {
-	
+
 	@Autowired
-	private UserService userService;	
-	
+	private UserService userService;
+
 	@Autowired
 	private ActivityService activityService;
-	
+
 	@Autowired
 	private TaskScheduler scheduler;	
 
-	@RequestMapping(value = {"/login", "/"}, method=RequestMethod.GET)
-    public String login(Model model) {
-        return "login";
-    }
+	@RequestMapping(value = { "/login", "/" }, method = RequestMethod.GET)
+	public String login(Model model) {
+		return "login";
+	}
 
 	@RequestMapping(value = {"/user/home"}, method=RequestMethod.GET)
     public String userIndex(Model model, Activity activity) throws MessagingException {
@@ -86,6 +84,5 @@ public class WebController {
             model.addAttribute("activity", activity);
             return "user/index";
         }
-    }    
-	
+    }
 }
