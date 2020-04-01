@@ -75,10 +75,12 @@ public class WebController {
 			int hours = date.getHour();
 			int day = date.getDayOfMonth();
 			int month = date.getMonth().getValue();
+			String expression = "";
 			if ((minute - 30) < 0) {
-				String expression = " 0 " + (minute + 30) + " " + (hours - 1) + " " + day + " " + month + " ?";
+				expression += " 0 " + (minute + 30) + " " + (hours - 1) + " " + day + " " + month + " ?";
+			} else {
+				expression += " 0 " + (minute - 30) + " " + hours + " " + day + " " + month + " ?";
 			}
-			String expression = " 0 " + (minute - 30) + " " + hours + " " + day + " " + month + " ?";
 			CronTrigger trigger = new CronTrigger(expression, TimeZone.getTimeZone(TimeZone.getDefault().getID()));
 			MyRunnable myRunnable = new MyRunnable(currActivity, mailService);
             scheduler.schedule(myRunnable, trigger);
