@@ -12,7 +12,7 @@
 <body>
 	<div class="container">
 		<h2>Home page</h2>
-		<h1 th:text="'Welcome, ' + ${authUser} + '!'">Welcome!</h1>
+		<h1 th:text="'Welcome, ' + ${authUser} + '!'">Welcome!</h1> Click here for <a th:href="@{/logout}">Logout</a>
 		<img class="rounded-circle" th:src="${authUserImage} == null ? _ : @{'data:image/png;base64,'+${authUserImage}}" style="width:100px;">
 
 		<h2>Activity Form</h2>
@@ -41,7 +41,7 @@
 						<td th:text="${activity.activityTitle}"></td>
 						<td th:text="${activity.type}"></td>
 						<td th:text="${activity.description}"></td>
-						<td th:text="${activity.expiredDate}"></td>
+						<td th:text="${#temporals.format(activity.expiredDate, 'yyyy-MM-dd HH:mm')}"></td>
 					</tr>
 				</tbody>
 			</table>
