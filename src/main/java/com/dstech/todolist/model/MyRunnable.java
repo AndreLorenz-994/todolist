@@ -2,13 +2,10 @@ package com.dstech.todolist.model;
 
 import javax.mail.MessagingException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.dstech.todolist.service.MailService;
 
 public class MyRunnable implements Runnable {
 	
-	@Autowired
 	MailService mail;
 	
 	private Activity activity;
