@@ -25,6 +25,8 @@ public class Activity {
 	private String type;
 
 	private String description;
+	
+	private String date;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime expiredDate;
@@ -88,6 +90,14 @@ public class Activity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 }

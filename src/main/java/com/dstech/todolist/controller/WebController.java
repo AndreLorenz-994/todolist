@@ -68,15 +68,16 @@ public class WebController {
 	    User user = userService.findByEmail(auth.getName());   	
 	    activity.setUser(user);
         Activity currActivity = activityService.save(activity);
-        List<Activity> activities = user.getActivities();
-        activities.add(currActivity);
-        userService.addActivities(user, activities);
+        userService.addActivities(user, currActivity);
         if(currActivity != null) {
             LocalDateTime date = currActivity.getExpiredDate();
 			int minute = date.getMinute();
 			int hours = date.getHour();
 			int day = date.getDayOfMonth();
 			int month = date.getMonth().getValue();
+			if ((minute - 30) < 0) {
+				String expression = " 0 " + (minute + 30) + " " + (hours - 1) + " " + day + " " + month + " ?";
+			}
 			String expression = " 0 " + (minute - 30) + " " + hours + " " + day + " " + month + " ?";
 			CronTrigger trigger = new CronTrigger(expression, TimeZone.getTimeZone(TimeZone.getDefault().getID()));
 			MyRunnable myRunnable = new MyRunnable(currActivity, mailService);

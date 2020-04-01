@@ -1,5 +1,7 @@
 package com.dstech.todolist.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,13 @@ public class ActivityServiceImp implements ActivityService {
 	@Override
 	public Activity save(Activity activity) {
 		// TODO Auto-generated method stub
+	    /* For solve Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDateTime' for property 'expiredDate' */
+	    String date = activity.getDate();
+	    String expiredDate = date.replace("T", " ");
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); 
+	    LocalDateTime dateTime = LocalDateTime.parse(expiredDate, formatter);	
+	    activity.setExpiredDate(dateTime);	    
+		
 		return  activityRepository.save(activity);
 	}
 

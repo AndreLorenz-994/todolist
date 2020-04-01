@@ -1,7 +1,5 @@
 package com.dstech.todolist.service;
 
-import java.util.List;
-
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.dstech.todolist.dao.UserRegistrationDao;
@@ -18,6 +16,6 @@ public interface UserService extends UserDetailsService {
     
     void deleteById(Long userId);
     
-    void addActivities(User user, List<Activity> activities);
+    void addActivities(User user, Activity activities);
 	
 }

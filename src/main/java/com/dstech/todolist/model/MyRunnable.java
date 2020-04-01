@@ -6,7 +6,7 @@ import com.dstech.todolist.service.MailService;
 
 public class MyRunnable implements Runnable {
 	
-	MailService mail;
+	private MailService mail;
 	
 	private Activity activity;
 	

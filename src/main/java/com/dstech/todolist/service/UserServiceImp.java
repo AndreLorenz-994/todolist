@@ -3,7 +3,6 @@ package com.dstech.todolist.service;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,9 +78,9 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public void addActivities(User user, List<Activity> activities) {
+	public void addActivities(User user, Activity activity) {
 		// TODO Auto-generated method stub
-		user.setActivities(activities);
+		user.getActivities().add(activity);
 		userRepository.save(user);
 	}
 

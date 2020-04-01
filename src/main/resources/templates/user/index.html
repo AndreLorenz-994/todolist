@@ -22,7 +22,7 @@
 			<input type="text" placeholder="Name activity" th:field="*{activityTitle}"> 
 			<input placeholder="Type of activity" th:field="*{type}" type="text">
 			<input placeholder="Description" th:field="*{description}" type="text"> 
-			<input placeholder="Expired date" th:field="*{expiredDate}" type="text"> <input type="hidden" th:field="*{id}"> 
+			<input placeholder="Expired date" th:field="*{date}" type="datetime-local"> <input type="hidden" th:field="*{id}"> 
 			<input type="submit" value="Submit">
 		</form>
 
