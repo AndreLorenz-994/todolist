@@ -78,6 +78,9 @@ public class WebController {
 			String expression = "";
 			if ((minute - 30) < 0) {
 				expression += " 0 " + (minute + 30) + " " + (hours - 1) + " " + day + " " + month + " ?";
+				if((hours - 1) < 0) {
+					expression += " 0 " + (minute + 30) + " " + (hours + 23) + " " + day + " " + month + " ?";
+				}
 			} else {
 				expression += " 0 " + (minute - 30) + " " + hours + " " + day + " " + month + " ?";
 			}
